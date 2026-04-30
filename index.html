@@ -1,267 +1,114 @@
-import { useState } from "react";
-const workouts = {
-A: {
-label: "Giorno A",
-subtitle: "Glutei + Gambe potenza",
-color: "#ec4899",
-esercizi: [
-{ nome: "Riscaldamento attivazione", dettaglio: "Cyclette o camminata inclinata", serie
-{ nome: "Hip Thrust con bilanciere", dettaglio: "Schiena su panca, bilanciere sui fianc
-{ nome: "Squat con manubri o bilanciere", dettaglio: "Piedi larghezza spalle", serie: "
-{ nome: "Bulgarian Split Squat", dettaglio: "Piede posteriore su panca, manubri in mano
-{ nome: "Abductor Machine (abduzione)", dettaglio: "Macchina per apertura gambe", serie
-{ nome: "Leg Curl (femorali)", dettaglio: "Macchina sdraiata o seduta", serie: "3", rep
-{ nome: "Stretching glutei + flessori", dettaglio: "Pigeon pose, affondo basso", serie:
-],
-},
-B: {
-label: "Giorno B",
-subtitle: "Addome + Gluteo laterale",
-color: "#a855f7",
-esercizi: [
-{ nome: "Riscaldamento", dettaglio: "Camminata veloce o salto corda", serie: "—", reps:
-{ nome: "Abductor con elastico (laterale)", dettaglio: "Elastico sopra le ginocchia, pa
-{ nome: "Clamshell con elastico", dettaglio: "Sdraiata sul fianco, apri e chiudi le gin
-{ nome: "Glute Kickback al cavo (o con elastico)", dettaglio: "Quadrupedia o in piedi a
-{ nome: "Crunch classico", dettaglio: "A terra, mani dietro la testa", serie: "3", reps
-{ nome: "Leg Raise", dettaglio: "Sdraiata, gambe dritte su e giù", serie: "3", reps: "1
-{ nome: "Plank laterale", dettaglio: "Su avambraccio, fianco al suolo", serie: "3", rep
-{ nome: "Russian Twist con peso", dettaglio: "Seduta, piedi sollevati, disco o manubrio
-{ nome: "Stretching + defaticamento", dettaglio: "Addome, obliqui, piriforme", serie: "
-],
-},
-C: {
-label: "Giorno C",
-subtitle: "Gambe complete + Addome",
-color: "#f59e0b",
-esercizi: [
-{ nome: "Riscaldamento", dettaglio: "Tapis roulant inclinato", serie: "—", reps: "10 mi
-{ nome: "Leg Press con piedi alti", dettaglio: "Piattaforma con piedi in posizione alta
-{ nome: "Affondi con manubri (reverse)", dettaglio: "Passo indietro alternato", serie:
-{ nome: "Abductor Machine lenta", dettaglio: "3 secondi ad aprire, 3 a chiudere", serie
-{ nome: "Stacchi rumeni con manubri", dettaglio: "Gambe quasi dritte, bilanciere o manu
-{ nome: "Bicycle Crunch", dettaglio: "Sdraiata, gomito verso ginocchio opposto", serie:
-{ nome: "Dead Bug", dettaglio: "Sdraiata, estendi braccio e gamba opposta", serie: "3",
-{ nome: "Stretching gambe complete", dettaglio: "Femorali, quadricipiti, glutei, polpac
-],
-},
-};
-const schedule = [
-{ giorno: "Lunedì", ws: "A", rest: false },
-{ giorno: "Martedì", ws: null, rest: true },
-{ giorno: "Mercoledì", ws: "B", rest: false },
-{ giorno: "Giovedì", ws: null, rest: true },
-{ giorno: "Venerdì", ws: "C", rest: false },
-{ giorno: "Sabato", ws: null, rest: true },
-{ giorno: "Domenica", ws: null, rest: true },
-];
-const focusTips = [
-{ icon: " { icon: " { icon: " { icon: " ", titolo: "Gluteo medio (laterale)", testo: "È il muscolo che dà la forma tonde
-", titolo: "Progressione pesi", testo: "Aumenta il peso dell'abductor machine og
-", titolo: "Mente-muscolo", testo: "Prima di ogni serie, pensa consciamente al m
-", titolo: "Proteine", testo: "Per costruire muscolo servono proteine: punta a 1
-];
-export default function SchedaGlutei() {
-const [activeTab, setActiveTab] = useState("A");
-const [showSchedule, setShowSchedule] = useState(false);
-const w = workouts[activeTab];
-const colors = { A: "#ec4899", B: "#a855f7", C: "#f59e0b" };
-return (
-<div style={{
-minHeight: "100vh",
-background: "#0a0a0f",
-fontFamily: "'Georgia', serif",
-color: "#f0f0f0",
-padding: "24px 16px",
-}}>
-{/* Header */}
-<div style={{ textAlign: "center", marginBottom: 28 }}>
-<div style={{
-display: "inline-block",
-background: "linear-gradient(90deg, #ec4899, #a855f7, #f59e0b)",
-borderRadius: 4,
-padding: "2px 16px",
-fontSize: 10,
-letterSpacing: 4,
-textTransform: "uppercase",
-marginBottom: 12,
-color: "#fff",
-fontFamily: "monospace",
-}}>Scheda Personalizzata</div>
-<h1 style={{
-fontSize: 26,
-fontWeight: "bold",
-margin: "0 0 6px",
-background: "linear-gradient(90deg, #ec4899 0%, #a855f7 50%, #f59e0b 100%)",
-WebkitBackgroundClip: "text",
-WebkitTextFillColor: "transparent",
-}}>Glutei · Addome · Gambe</h1>
-<p style={{ color: "#64748b", fontSize: 12, margin: 0, fontFamily: "monospace" Focus: gluteo medio laterale + core · 3×week
-</p>
-</div>
-}}>
-{/* Toggle calendario */}
-<button onClick={() => setShowSchedule(!showSchedule)} style={{
-width: "100%",
-padding: "10px",
-borderRadius: 10,
-border: "1px solid rgba(255,255,255,0.08)",
-background: "rgba(255,255,255,0.04)",
-color: "#94a3b8",
-fontSize: 12,
-cursor: "pointer",
-marginBottom: showSchedule ? 12 : 20,
-fontFamily: "monospace",
-letterSpacing: 1,
-}}>
-{showSchedule ? "▲ Nascondi" : "▼ Vedi"} calendario settimanale
-</button>
-{showSchedule && (
-<div style={{
-display: "grid",
-gridTemplateColumns: "repeat(7, 1fr)",
-gap: 4,
-marginBottom: 20,
-}}>
-{schedule.map((d) => (
-<div key={d.giorno} style={{
-textAlign: "center",
-padding: "8px 4px",
-borderRadius: 8,
-background: d.rest ? "rgba(255,255,255,0.03)" : `${colors[d.ws]}22`,
-border: `1px solid ${d.rest ? "rgba(255,255,255,0.06)" : `${colors[d.ws]}44`}`,
-}}>
-<div style={{ fontSize: 9, color: "#475569", fontFamily: "monospace", marginBot
-{d.giorno.substring(0, 3).toUpperCase()}
-</div>
-<div style={{
-fontSize: d.rest ? 12 : 14,
-fontWeight: "bold",
-color: d.rest ? "#334155" : colors[d.ws],
-fontFamily: "monospace",
-}}>
-{d.rest ? "—" : d.ws}
-</div>
-</div>
-))}
-</div>
-)}
-{/* Tabs */}
-<div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
-{["A", "B", "C"].map((tab) => (
-<button key={tab} onClick={() => setActiveTab(tab)} style={{
-flex: 1,
-padding: "10px 4px",
-borderRadius: 10,
-border: `2px solid ${activeTab === tab ? colors[tab] : "rgba(255,255,255,0.07)"}`
-background: activeTab === tab ? `${colors[tab]}18` : "rgba(255,255,255,0.03)",
-color: activeTab === tab ? colors[tab] : "#475569",
-fontWeight: "bold",
-fontSize: 12,
-cursor: "pointer",
-fontFamily: "monospace",
-lineHeight: 1.4,
-}}>
-<div>{workouts[tab].label}</div>
-<div style={{ fontSize: 9, fontWeight: "normal", marginTop: 2, opacity: 0.8 }}>
-{workouts[tab].subtitle}
-</div>
-</button>
-))}
-</div>
-{/* Esercizi */}
-<div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
-{w.esercizi.map((e, i) => (
-<div key={i} style={{
-background: "rgba(255,255,255,0.03)",
-border: "1px solid rgba(255,255,255,0.06)",
-borderLeft: `3px solid ${w.color}`,
-borderRadius: 10,
-padding: "12px 14px",
-}}>
-<div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex
-<div style={{ flex: 1 }}>
-<div style={{ fontWeight: "bold", fontSize: 14, color: "#f1f5f9" }}>{e.nome}<
-<div style={{ fontSize: 11, color: "#475569", marginTop: 1, fontFamily: "mono
-{e.focus && (
-<div style={{
-display: "inline-block",
-marginTop: 5,
-padding: "2px 8px",
-borderRadius: 4,
-fontSize: 10,
-fontFamily: "monospace",
-background: `${w.color}22`,
-color: w.color,
-border: `1px solid ${w.color}33`,
-}}>{e.focus}</div>
-)}
-</div>
-<div style={{ display: "flex", flexDirection: "column", gap: 4, alignItems: "fl
-{e.serie !== "—" && (
-<span style={{
-background: `${w.color}33`,
-color: w.color,
-borderRadius: 5,
-padding: "2px 8px",
-fontSize: 11,
-fontWeight: "bold",
-fontFamily: "monospace",
-whiteSpace: "nowrap",
-}}>{e.serie} serie</span>
-)}
-<span style={{
-background: "rgba(255,255,255,0.06)",
-color: "#94a3b8",
-borderRadius: 5,
-padding: "2px 8px",
-fontSize: 11,
-fontFamily: "monospace",
-whiteSpace: "nowrap",
-}}>{e.reps}</span>
-</div>
-</div>
-<div style={{
-marginTop: 8,
-fontSize: 11,
-color: "#64748b",
-background: "rgba(255,255,255,0.02)",
-borderRadius: 5,
-padding: "5px 8px",
-fontStyle: "italic",
-borderLeft: "2px solid rgba(255,255,255,0.06)",
-}}> {e.note}</div>
-</div>
-))}
-</div>
-{/* Focus tips */}
-<div style={{
-background: "rgba(255,255,255,0.03)",
-border: "1px solid rgba(255,255,255,0.07)",
-borderRadius: 12,
-padding: 16,
-}}>
-<div style={{ fontSize: 10, letterSpacing: 3, color: "#64748b", marginBottom: 14, fon
-Consigli per i tuoi obiettivi
-</div>
-{focusTips.map((t, i) => (
-<div key={i} style={{
-marginBottom: 12,
-padding: "10px 12px",
-borderRadius: 8,
-background: "rgba(255,255,255,0.02)",
-border: "1px solid rgba(255,255,255,0.04)",
-}}>
-<div style={{ fontWeight: "bold", fontSize: 12, color: "#e2e8f0", marginBottom: 3
-{t.icon} {t.titolo}
-</div>
-</div>
-<div style={{ fontSize: 12, color: "#64748b", lineHeight: 1.5 }}>{t.testo}</div>
-))}
-</div>
-<div style={{ textAlign: "center", marginTop: 24, fontSize: 10, color: "#1e293b", fontF
-Aggiorna la scheda dopo 6 settimane · aggiungi peso ogni 1–2 settimane
-</div>
-</div>
-);
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scheda Glutei</title>
+
+<style>
+body {
+    margin:0;
+    background:#0a0a0f;
+    color:#f0f0f0;
+    font-family: Arial, sans-serif;
+    padding:20px;
 }
+h1 {
+    text-align:center;
+}
+.tabs {
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+button {
+    flex:1;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+.activeA { background:#ec4899; color:white;}
+.activeB { background:#a855f7; color:white;}
+.activeC { background:#f59e0b; color:white;}
+
+.card {
+    background:#111;
+    border-radius:10px;
+    padding:12px;
+    margin-bottom:10px;
+    border-left:4px solid #ec4899;
+}
+.small {
+    font-size:12px;
+    color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Glutei · Addome · Gambe</h1>
+
+<div class="tabs">
+<button onclick="showWorkout('A')" id="btnA" class="activeA">Giorno A</button>
+<button onclick="showWorkout('B')" id="btnB">Giorno B</button>
+<button onclick="showWorkout('C')" id="btnC">Giorno C</button>
+</div>
+
+<div id="content"></div>
+
+<script>
+
+const workouts = {
+A: [
+["Hip Thrust", "4 serie", "12 rip"],
+["Squat", "3 serie", "12 rip"],
+["Bulgarian", "3 serie", "10 per gamba"],
+["Abductor", "4 serie", "20 rip"],
+["Leg Curl", "3 serie", "12 rip"]
+],
+B: [
+["Elastico laterale", "3 serie", "15 passi"],
+["Clamshell", "3 serie", "20 rip"],
+["Kickback", "3 serie", "15 rip"],
+["Crunch", "3 serie", "20 rip"],
+["Plank", "3 serie", "25 sec"]
+],
+C: [
+["Leg Press", "4 serie", "15 rip"],
+["Affondi", "3 serie", "12 per gamba"],
+["Abductor lento", "4 serie", "15 rip"],
+["Stacchi rumeni", "3 serie", "12 rip"],
+["Bicycle Crunch", "3 serie", "20 rip"]
+]
+};
+
+function showWorkout(day) {
+    const content = document.getElementById("content");
+    content.innerHTML = "";
+
+    document.getElementById("btnA").className="";
+    document.getElementById("btnB").className="";
+    document.getElementById("btnC").className="";
+
+    document.getElementById("btn"+day).className="active"+day;
+
+    workouts[day].forEach(e => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+            <strong>${e[0]}</strong><br>
+            <span class="small">${e[1]} · ${e[2]}</span>
+        `;
+        content.appendChild(div);
+    });
+}
+
+showWorkout("A");
+
+</script>
+
+</body>
+</html>
